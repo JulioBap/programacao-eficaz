@@ -1,28 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{{{ url_for('static', filename='templates/getit.css') }}}}">
     <title>Get-it</title>
 </head>
 
 <body>
+    <main class="app-shell">
+        <header class="app-header">
+            <div>
+                <img class="brand-logo" src="{{{{ url_for('static', filename='img/logo-getit.png') }}}}" alt="Get-it">
+                <p>Como o Post-it, mas com outro verbo</p>
+            </div>
+        </header>
 
-    <img src="{{{{ url_for('static', filename='img/logo-getit.png') }}}}">
-    <p>Como o Post-it, mas com outro verbo</p>
+        <section class="composer" aria-label="Nova anotação">
+            <div class="section-heading">
+                <h1>Nova anotação</h1>
+                <span>Guarde uma ideia rápida</span>
+            </div>
 
-    <form action="/submit" method="POST">
-        <label for="titulo">Título</label>
-        <input id="titulo" type="text" name="titulo" />
+            <form action="/submit" method="POST">
+                <div class="field-group">
+                    <label for="titulo">Título</label>
+                    <input id="titulo" type="text" name="titulo" placeholder="Ex.: Revisar tarefa" />
+                </div>
 
-        <label for="detalhes">Detalhes</label>
-        <input id="detalhes" name="detalhes" />
+                <div class="field-group">
+                    <label for="detalhes">Detalhes</label>
+                    <textarea id="detalhes" name="detalhes" rows="4" placeholder="Escreva os detalhes da nota"></textarea>
+                </div>
 
-        <input type="submit" />
-    </form>
+                <button type="submit">Adicionar nota</button>
+            </form>
+        </section>
 
-    <ul>
-        {notes}
-    </ul>
+        <section class="notes-section" aria-label="Anotações salvas">
+            <div class="section-heading">
+                <h2>Anotações</h2>
+                <span>Suas notas ficam salvas abaixo</span>
+            </div>
+
+            <ul class="notes-list">
+                {notes}
+            </ul>
+        </section>
+    </main>
 
 </body>
 </html>
