@@ -4,7 +4,7 @@ def index():
     note_template = load_template('components/note.html')
     notes_li = [
         note_template.format(title=dados['titulo'], details=dados['detalhes'])
-        for dados in load_data('notes.json')
+        for dados in load_data()
     ]
     notes = '\n'.join(notes_li)
 

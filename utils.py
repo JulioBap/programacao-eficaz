@@ -1,9 +1,42 @@
-import json
-def load_data(arquivo_json):
-    caminho = f"static/data/{arquivo_json}"
-    with open(caminho, encoding='utf-8') as arquivo:
-        dados = json.load(arquivo)
-        return dados
+import sqlite3
+def abrir_banco():
+    return sqlite3.connect('banco.db')
+
+
+def criar_tabela():
+    conexao = abrir_banco()
+    cursor = conexao.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS note (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL
+        )
+    """)
+    conexao.commit()
+    conexao.close()
+
+criar_tabela()
+
+
+def load_data():
+    conexao = abrir_banco()
+    cursor = conexao.cursor()
+
+    cursor.execute("SELECT id, title, content FROM note")
+    resultados = cursor.fetchall()
+
+    conexao.close()
+
+    dados = []
+
+    for resultado in resultados:
+        dados.append({
+            "titulo": resultado[1],
+            "detalhes": resultado[2]
+        })
+
+    return dados
 
 
 def load_template(arquivo_template):
@@ -12,10 +45,18 @@ def load_template(arquivo_template):
         dados = arquivo.read()
         return dados
 
+
 def recebe_anotacao(anotacao):
-    caminho = 'static/data/notes.json'
-    with open(caminho, encoding='utf-8') as arquivo:
-        dados = json.load(arquivo)
-        dados.append(anotacao)
-    with open(caminho, 'w', encoding='utf-8') as arquivo:
-        json.dump(dados, arquivo, ensure_ascii=False, indent=4)
+    conexao = abrir_banco()
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        "INSERT INTO note (title, content) VALUES (?, ?)",
+        (
+            anotacao["titulo"],
+            anotacao["detalhes"]
+        )
+    )
+
+    conexao.commit()
+    conexao.close()
