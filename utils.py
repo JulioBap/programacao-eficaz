@@ -32,6 +32,7 @@ def load_data():
 
     for resultado in resultados:
         dados.append({
+            'id': resultado[0],
             "titulo": resultado[1],
             "detalhes": resultado[2]
         })
@@ -58,5 +59,17 @@ def recebe_anotacao(anotacao):
         )
     )
 
+    conexao.commit()
+    conexao.close()
+
+def apagar_anotacao(anotacao):
+    conexao = abrir_banco()
+    cursor = conexao.cursor()
+    cursor.execute(
+        'DELETE FROM note where id = ?',
+        (
+            anotacao['id'],
+        )
+    )
     conexao.commit()
     conexao.close()

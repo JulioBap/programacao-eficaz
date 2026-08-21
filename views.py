@@ -1,9 +1,9 @@
-from utils import load_data, load_template, recebe_anotacao
+from utils import load_data, load_template, recebe_anotacao, apagar_anotacao
 
 def index():
     note_template = load_template('components/note.html')
     notes_li = [
-        note_template.format(title=dados['titulo'], details=dados['detalhes'])
+        note_template.format(id=dados['id'],title=dados['titulo'], details=dados['detalhes'])
         for dados in load_data()
     ]
     notes = '\n'.join(notes_li)
@@ -15,3 +15,8 @@ def submit(titulo, detalhes):
     dicionario['titulo'] = titulo
     dicionario['detalhes'] = detalhes
     recebe_anotacao(dicionario)
+
+def delete(id):
+    dicionario = {}
+    dicionario['id'] = id
+    apagar_anotacao(dicionario)
