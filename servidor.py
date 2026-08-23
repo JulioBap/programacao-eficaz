@@ -20,7 +20,7 @@ def submit_form():
     views.submit(titulo, detalhes)
     return redirect('/')
 
-@app.route('/excluir', methods=['POST'] )
+@app.route('/delete', methods=['POST'] )
 def apagar():
     id = request.form.get('id')
 

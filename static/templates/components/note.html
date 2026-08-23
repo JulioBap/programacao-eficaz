@@ -1,8 +1,8 @@
 <li class="note-card">
     <h3>{title}</h3>
     <p>{details}</p>
-    <form method="POST" action="/excluir">
-        <input type="hidden" name="id" value="{id}"> 
-        <button type="submit">Excluir</button>
+    <form action="/delete" method="POST">
+        <input type="hidden" name="id" value="{id}">
+        <button type="submit" name="delete_button">Apagar</button>
     </form>
 </li>
