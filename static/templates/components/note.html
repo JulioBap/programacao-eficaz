@@ -1,8 +1,15 @@
 <li class="note-card">
     <h3>{title}</h3>
     <p>{details}</p>
-    <form action="/delete" method="POST">
-        <input type="hidden" name="id" value="{id}">
-        <button type="submit" name="delete_button">Apagar</button>
-    </form>
+    <div class="note-actions">
+        <form class="note-action-form" action="/editar" method="GET">
+            <input type="hidden" name="id" value="{id}">
+            <button class="note-button" type="submit" name="edit_button">Editar</button>
+        </form>
+
+        <form class="note-action-form" action="/delete" method="POST">
+            <input type="hidden" name="id" value="{id}">
+            <button class="note-button note-button-danger" type="submit" name="delete_button">Apagar</button>
+        </form>
+    </div>
 </li>

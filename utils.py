@@ -73,3 +73,47 @@ def apagar_anotacao(anotacao):
     )
     conexao.commit()
     conexao.close()
+
+    
+def buscar_note(id):
+    conexao = abrir_banco()
+    cursor = conexao.cursor()
+    cursor.execute("""
+        SELECT
+            id,
+            title,
+            content
+        FROM note
+        WHERE id = ?
+    """, (id,))
+    resultado = cursor.fetchone()
+    conexao.close()
+
+    if resultado is None:
+        return None
+
+    note = {
+        "id": resultado[0],
+        "titulo": resultado[1],
+        "detalhes": resultado[2],
+    }
+
+    return note
+
+def editar(note):
+    conexao = abrir_banco()
+    cursor = conexao.cursor()
+    cursor.execute("""
+        UPDATE note
+        SET
+            title = ?,
+            content = ?
+        WHERE id = ?
+    """,
+    (
+        note["titulo"],
+        note["detalhes"],
+        note["id"]
+    ))
+    conexao.commit()
+    conexao.close()

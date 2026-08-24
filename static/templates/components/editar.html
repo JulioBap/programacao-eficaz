@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{{{ url_for('static', filename='templates/getit.css') }}}}">
+    <title>Editar anotação | Get-it</title>
+</head>
+
+<body>
+    <main class="app-shell">
+        <header class="app-header">
+            <div>
+                <img class="brand-logo" src="{{{{ url_for('static', filename='img/logo-getit.png') }}}}" alt="Get-it">
+                <p>Como o Post-it, mas com outro verbo</p>
+            </div>
+
+            <a class="header-link" href="/">Voltar</a>
+        </header>
+
+        <section class="edit-panel" aria-label="Editar anotação">
+            <div class="section-heading">
+                <h1>Editar anotação</h1>
+                <span>Atualize o título e os detalhes da sua nota</span>
+            </div>
+
+            <form class="edit-form" action="/editar" method="POST">
+                <input type="hidden" name="id" value="{id}">
+
+                <div class="field-group">
+                    <label for="titulo">Título</label>
+                    <input id="titulo" type="text" name="titulo" value="{title}" placeholder="Ex.: Revisar tarefa" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="detalhes">Detalhes</label>
+                    <textarea id="detalhes" name="detalhes" rows="7" placeholder="Escreva os detalhes da nota" required>{details}</textarea>
+                </div>
+
+                <div class="edit-actions">
+                    <a class="button-link button-link-secondary" href="/">Cancelar</a>
+                    <button type="submit">Salvar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

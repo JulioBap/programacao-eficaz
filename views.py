@@ -1,4 +1,6 @@
-from utils import load_data, load_template, recebe_anotacao, apagar_anotacao
+from html import escape
+
+from utils import load_data, load_template, recebe_anotacao, apagar_anotacao, buscar_note, editar as editar_note
 
 def index():
     note_template = load_template('components/note.html')
@@ -20,3 +22,22 @@ def delete(id):
     dicionario = {}
     dicionario['id'] = id
     apagar_anotacao(dicionario)
+
+def editar(id):
+    nota = buscar_note(id)
+
+    if nota is None:
+        return load_template('components/editar.html').format(id='', title='', details='')
+
+    return load_template('components/editar.html').format(
+        id=escape(str(nota['id']), quote=True),
+        title=escape(nota['titulo'], quote=True),
+        details=escape(nota['detalhes'])
+    )
+
+def update(id, titulo, detalhes):
+    dicionario = {}
+    dicionario['id'] = id
+    dicionario['titulo'] = titulo
+    dicionario['detalhes'] = detalhes
+    editar_note(dicionario)
