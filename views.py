@@ -30,9 +30,9 @@ def editar(id):
         return load_template('components/editar.html').format(id='', title='', details='')
 
     return load_template('components/editar.html').format(
-        id=escape(str(nota['id']), quote=True),
-        title=escape(nota['titulo'], quote=True),
-        details=escape(nota['detalhes'])
+        id=escape(str(nota.id), quote=True),
+        title=escape(nota.title, quote=True),
+        details=escape(nota.content)
     )
 
 def update(id, titulo, detalhes):

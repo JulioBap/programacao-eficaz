@@ -262,11 +262,17 @@ button:hover {
 
 .note-button {
     min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 0 12px;
     border: 1px solid rgba(31, 41, 51, 0.14);
+    border-radius: 6px;
     background: rgba(255, 255, 255, 0.58);
     color: var(--ink);
     font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
 }
 
 .note-button:hover {

@@ -24,7 +24,7 @@
                 <span>Atualize o título e os detalhes da sua nota</span>
             </div>
 
-            <form class="edit-form" action="/editar" method="POST">
+            <form class="edit-form" action="/update" method="POST">
                 <input type="hidden" name="id" value="{id}">
 
                 <div class="field-group">
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="edit-actions">
-                    <a class="button-link button-link-secondary" href="/">Cancelar</a>
+                    <button class="button-link button-link-secondary" type="submit" formaction="/" formmethod="GET" formnovalidate>Cancelar</button>
                     <button type="submit">Salvar</button>
                 </div>
             </form>

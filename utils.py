@@ -1,4 +1,21 @@
 import sqlite3
+
+
+class Note:
+    def __init__(self, id, title, content):
+        self.id = id
+        self.title = title
+        self.content = content
+
+    @property
+    def titulo(self):
+        return self.title
+
+    @property
+    def detalhes(self):
+        return self.content
+
+
 def abrir_banco():
     return sqlite3.connect('banco.db')
 
@@ -92,15 +109,18 @@ def buscar_note(id):
     if resultado is None:
         return None
 
-    note = {
-        "id": resultado[0],
-        "titulo": resultado[1],
-        "detalhes": resultado[2],
-    }
-
-    return note
+    return Note(resultado[0], resultado[1], resultado[2])
 
 def editar(note):
+    if isinstance(note, dict):
+        note_id = note["id"]
+        title = note["titulo"]
+        content = note["detalhes"]
+    else:
+        note_id = note.id
+        title = note.title
+        content = note.content
+
     conexao = abrir_banco()
     cursor = conexao.cursor()
     cursor.execute("""
@@ -111,9 +131,9 @@ def editar(note):
         WHERE id = ?
     """,
     (
-        note["titulo"],
-        note["detalhes"],
-        note["id"]
+        title,
+        content,
+        note_id
     ))
     conexao.commit()
     conexao.close()

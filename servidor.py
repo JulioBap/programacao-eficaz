@@ -27,12 +27,11 @@ def apagar():
     views.delete(id)
     return redirect('/')
 
-@app.route('/editar', methods=['GET'])
-def editar():
-    id = request.args.get('id')
+@app.route('/update/<id>', methods=['GET'])
+def editar(id):
     return render_template_string(views.editar(id))
 
-@app.route('/editar', methods=['POST'])
+@app.route('/update', methods=['POST'])
 def salvar_edicao():
     id = request.form.get('id')
     titulo = request.form.get('titulo')
