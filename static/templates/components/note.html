@@ -1,12 +1,42 @@
-<li class="note-card">
-    <h3>{title}</h3>
-    <p>{details}</p>
-    <div class="note-actions">
-        <a class="note-button" href="/update/{id}" name="edit_button">Editar</a>
+<li class="note-card card">
+    <h3>
+        {title}
+        <span class="favorite-icon">{favorite_icon}</span>
+    </h3>
 
-        <form class="note-action-form" action="/delete" method="POST">
+    <p>{details}</p>
+
+    <div class="note-actions">
+        <a
+            class="note-button"
+            href="/update/{id}"
+            name="edit_button"
+        >
+            Editar
+        </a>
+
+        <form
+            class="note-action-form"
+            action="/delete"
+            method="POST"
+        >
             <input type="hidden" name="id" value="{id}">
-            <button class="note-button note-button-danger" type="submit" name="delete_button">Apagar</button>
+
+            <button
+                class="note-button note-button-danger"
+                type="submit"
+                name="delete_button"
+            >
+                Apagar
+            </button>
         </form>
+
+        <a
+            class="note-button"
+            href="/favoritar/{id}"
+            name="favorite_button"
+        >
+            Favoritar
+        </a>
     </div>
 </li>

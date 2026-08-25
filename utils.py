@@ -27,7 +27,8 @@ def criar_tabela():
         CREATE TABLE IF NOT EXISTS note (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            content TEXT NOT NULL
+            content TEXT NOT NULL,
+            favorite INTEGER DEFAULT 0
         )
     """)
     conexao.commit()
@@ -40,22 +41,26 @@ def load_data():
     conexao = abrir_banco()
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT id, title, content FROM note")
-    resultados = cursor.fetchall()
+    cursor.execute("""
+        SELECT id, title, content, favorite
+        FROM note
+        ORDER BY favorite DESC, id DESC
+    """)
 
+    resultados = cursor.fetchall()
     conexao.close()
 
     dados = []
 
     for resultado in resultados:
         dados.append({
-            'id': resultado[0],
+            "id": resultado[0],
             "titulo": resultado[1],
-            "detalhes": resultado[2]
+            "detalhes": resultado[2],
+            "favorite": resultado[3]
         })
 
     return dados
-
 
 def load_template(arquivo_template):
     caminho = f"static/templates/{arquivo_template}"
@@ -135,5 +140,37 @@ def editar(note):
         content,
         note_id
     ))
+    conexao.commit()
+    conexao.close()
+
+def adicionar_favorito():
+    conexao = abrir_banco()
+    cursor = conexao.cursor()
+    cursor.execute("PRAGMA table_info(note)")
+    resultado = cursor.fetchall()
+    colunas = [coluna[1] for coluna in resultado]
+    if 'favorite' not in colunas:
+        cursor.execute("""
+            ALTER TABLE note
+            ADD COLUMN favorite INTEGER DEFAULT 0
+        """)
+    conexao.commit()
+    conexao.close()
+adicionar_favorito()
+
+def alternar_favorito(id):
+    conexao = abrir_banco()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        UPDATE note
+        SET favorite =
+            CASE
+                WHEN favorite = 0 THEN 1
+                ELSE 0
+            END
+        WHERE id = ?
+    """, (id,))
+
     conexao.commit()
     conexao.close()

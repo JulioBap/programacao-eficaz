@@ -40,5 +40,11 @@ def salvar_edicao():
     views.update(id, titulo, detalhes)
     return redirect('/')
 
+@app.route('/favoritar/<id>', methods=['GET'])
+def favoritar(id):
+    views.favoritar(id)
+    return redirect('/')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
