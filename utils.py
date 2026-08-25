@@ -44,7 +44,7 @@ def load_data():
     cursor.execute("""
         SELECT id, title, content, favorite
         FROM note
-        ORDER BY favorite DESC, id DESC
+        ORDER BY favorite DESC, id ASC
     """)
 
     resultados = cursor.fetchall()
